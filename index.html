@@ -12,10 +12,32 @@
 }
 </style>
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.1.1/model-viewer.min.js"></script>
+ <script>
+const modelViewerParameters = document.querySelector("model-viewer#defaultmodelviewer");
+
+modelViewerParameters.addEventListener("load", (ev) => {
+
+  let material = modelViewerParameters.model.materials[1];
+	material.alphaMode = 'BLEND';
+  let opacityDisplay = document.querySelector("#opacity-value");
+
+  opacityDisplay.textContent = "0.5";//material.pbrMetallicRoughness.metallicFactor;
+
+  // Defaults to gold
+  material.setAlphaMode("BLEND");
+  material.pbrMetallicRoughness.setBaseColorFactor([1,1,1,0.5]);
+
+  document.querySelector('#opacitiness').addEventListener('input', (event) => {
+   material.pbrMetallicRoughness.setBaseColorFactor([1, 1, 1,event.target.value]);
+    opacityDisplay.textContent = event.target.value;
+  });
+
+});
+</script>
 </head>
 <body style="background-color:black;">
 
-<model-viewer src="cycle tharis.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls poster="poster.webp" shadow-intensity="1" camera-orbit="-92.84deg 31.65deg 600.2m" field-of-view="30deg">
+<model-viewer id="defaultmodelviewer" src="cycle tharis.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls poster="poster.webp" shadow-intensity="1" camera-orbit="-92.84deg 31.65deg 600.2m" field-of-view="30deg">
     <button class="Hotspot" slot="hotspot-1" data-position="-161.997m 133.647m 147.273m" data-normal="0m 1m 0m" data-visibility-attribute="visible">
         <div class="HotspotAnnotation">Engineer Diary</div>
     </button><button class="Hotspot" slot="hotspot-2" data-position="-127.598m 114.999m 152.474m" data-normal="0m 1m 0m" data-visibility-attribute="visible">
@@ -32,6 +54,12 @@
     <div id="ar-prompt">
         <img src="https://modelviewer.dev/shared-assets/icons/hand.png">
     </div>
+ <div class="controls">
+    <div>
+      <p>Opacity: <span id="opacity-value"></span></p>
+      <input id="opacitiness" type="range" min="0" max="1" step="0.01" value="0.5">
+    </div>
+  </div>
 </model-viewer>
 
 </body>
