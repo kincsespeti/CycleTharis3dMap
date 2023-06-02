@@ -12,28 +12,7 @@
 }
 </style>
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.1.1/model-viewer.min.js"></script>
- <script>
-const modelViewerParameters = document.querySelector("model-viewer#defaultmodelviewer");
-
-modelViewerParameters.addEventListener("load", (ev) => {
-
-  let material = modelViewerParameters.model.materials[1];
-	material.alphaMode = 'BLEND';
-  let opacityDisplay = document.querySelector("#opacity-value");
-
-  opacityDisplay.textContent = "0.5";//material.pbrMetallicRoughness.metallicFactor;
-
-  // Defaults to gold
-  material.setAlphaMode("BLEND");
-  material.pbrMetallicRoughness.setBaseColorFactor([1,1,1,0.5]);
-
-  document.querySelector('#opacitiness').addEventListener('input', (event) => {
-   material.pbrMetallicRoughness.setBaseColorFactor([1, 1, 1,event.target.value]);
-    opacityDisplay.textContent = event.target.value;
-  });
-
-});
-</script>
+ 
 </head>
 <body style="background-color:black;">
 
@@ -56,11 +35,32 @@ modelViewerParameters.addEventListener("load", (ev) => {
     </div>
  <div class="controls">
     <div>
-      <p>Opacity: <span id="opacity-value"></span></p>
+      <p style="color: white;">Opacity: <span id="opacity-value"></span></p>
       <input id="opacitiness" type="range" min="0" max="1" step="0.01" value="0.5">
     </div>
   </div>
 </model-viewer>
+<script>
+const modelViewerParameters = document.querySelector("model-viewer#defaultmodelviewer");
 
+modelViewerParameters.addEventListener("load", (ev) => {
+
+  let material = modelViewerParameters.model.materials[1];
+	material.alphaMode = 'BLEND';
+  let opacityDisplay = document.querySelector("#opacity-value");
+
+  opacityDisplay.textContent = "0.5";//material.pbrMetallicRoughness.metallicFactor;
+
+  // Defaults to gold
+  material.setAlphaMode("BLEND");
+  material.pbrMetallicRoughness.setBaseColorFactor([1,1,1,0.5]);
+
+  document.querySelector('#opacitiness').addEventListener('input', (event) => {
+   material.pbrMetallicRoughness.setBaseColorFactor([1, 1, 1,event.target.value]);
+    opacityDisplay.textContent = event.target.value;
+  });
+
+});
+</script>
 </body>
 </html> 
