@@ -46,14 +46,22 @@ const modelViewerParameters = document.querySelector("model-viewer#defaultmodelv
 modelViewerParameters.addEventListener("load", (ev) => {
 
   let material = modelViewerParameters.model.materials[1];
+  let mapMaterial = modelViewerParameters.model.materials[2];
+  let hiddenMaterial = modelViewerParameters.model.materials[3];
 	material.alphaMode = 'BLEND';
   let opacityDisplay = document.querySelector("#opacity-value");
 
   opacityDisplay.textContent = "0.5";//material.pbrMetallicRoughness.metallicFactor;
 
-  // Defaults to gold
+  // Defaults
   material.setAlphaMode("BLEND");
   material.pbrMetallicRoughness.setBaseColorFactor([1,1,1,0.5]);
+	
+  mapMaterial.setAlphaMode("MASK");
+  mapMaterial.pbrMetallicRoughness.setBaseColorFactor([1,1,1,0]);
+	
+  hiddenMaterial.setAlphaMode("MASK");
+  hiddenMaterial.pbrMetallicRoughness.setBaseColorFactor([1,1,1,0]);
 
   document.querySelector('#opacitiness').addEventListener('input', (event) => {
    material.pbrMetallicRoughness.setBaseColorFactor([1, 1, 1,event.target.value]);
